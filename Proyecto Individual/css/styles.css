@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif; 
+}
+
+main {
+    padding: 20px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(252, 128, 176);
+}
+
+.btn {
+    border: 0;
+    color: black;
+}
+
+.btn:hover {
+    color: grey;
+}
+
+::marker {
+    display: none;
+}
