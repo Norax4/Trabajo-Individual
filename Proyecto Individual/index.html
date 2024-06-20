@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Organizer!</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/bucketlist.js"></script>
+    <script type="module" src="js/array.js"></script>
+</head>
+
+<body>
+    <nav>
+        <p id="title"><h3>Organizer!</h3></p>
+    </nav>
+    <main>
+        <section>
+            <div class="popup" id="popup" style="display:none;">
+                <input type="text" id="textInput" placeholder="Ingresar texto...">
+                <button class="acceptBtn" id="createBtn">Crear</button>
+            </div>
+            <div class="popup" id="deletePopup" style="display: none;">
+                <p>¿Seguro de eliminar esta tarea?</p>
+                <button class="acceptBtn" id="deleteBtn">Eliminar</button>
+                <button class="acceptBtn" id="cancelBtn">Cancelar</button>
+            </div>
+        </section>
+
+        <div class="parcels">
+            <button id="checklist">Crear Tarea</button><br></br>
+            <button id="sort">Ordenar</button>
+            <ul id="parcel-list">
+                <!-- Parcelas -->
+            </ul>
+        </div>
+    </main>
+    
+</body>
+</html>
