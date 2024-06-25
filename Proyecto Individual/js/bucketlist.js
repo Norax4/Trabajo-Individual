@@ -2,27 +2,25 @@ import { listas } from './array.js';
 import { Lista } from './clases.js';
 
 let botonChecklist = document.getElementById("checklist");
-let parcelList = document.getElementById("parcel-list");
 let popup = document.getElementById("popup");
-let textInput = document.getElementById("textInput");
-let subtextInput = document.getElementById("subtextInput");
 let createBtn = document.getElementById("createBtn");
 
-    cargarListas(listas);
-
     function cargarListas(array){
-        parcelList.innerHTML = "";
+        const parcelList = document.getElementById("parcel-list");
+        parcelList.innerHTML = '';
         for (const item of array){
-            parcelList.innerHTML += listaHTML(item);
+            const div = document.createElement('div');
+            div.innerHTML += listaHTML(item);
+            parcelList.appendChild(div);
         }
     }
 
     function listaHTML(item){
         return `<a href="#" type="button" class="list-group-item list-group-item-action py-3 lh-sm">
                     <div class="d-flex w-100 align-items-center justify-content-between">
-                        <strong class="mb-1">¡Bienvenido!</strong>
+                        <strong class="mb-1">${item.info.titulo}</strong>
                     </div>
-                    <div class="col-10 mb-1 small">${item.subtitulo}</div>
+                    <div class="col-10 mb-1 small">${item.info.subtitulo}</div>
                     <button class="btn danger-btn" class="eliminarLista(${item.id}">x</button>
                 </a>`;
     }
@@ -34,15 +32,32 @@ let createBtn = document.getElementById("createBtn");
 
     //Crear tarea
     createBtn.addEventListener('click', function() {
-        let title = textInput.value;
-        let subtitle = subtextInput.value;
-        if (text) {
-            let newLista = new Lista(title, subtitle);
-            listas.push(newLista);
-        }
+        const title = document.getElementById("textInput").value;
+        const subtitle = document.getElementById("subtextInput").value;
+        const nuevaLista = new Lista(title, subtitle);
+        let listas = JSON.parse(localStorage.getItem('listas' || '[]'));
+        listas.push(nuevaLista);
+        localStorage.setItem('listas', JSON.stringify(listas));
         popup.style.display = 'none';
         textInput.value = '';
+        actualizarListas();
     });
+
+    /*function eliminarLista(id) {
+        let gameStorage = obtenerLocalStorage();
+    
+        let indice = gameStorage.findIndex(juego => juego.codigo === id);
+    
+        if (indice !== -1) {
+          gameStorage.splice(indice, 1);
+          guardarLocalStorage(gameStorage);
+          cargarJuegos(gameStorage);
+      
+          alert("Producto eliminado correctamente");
+        } else {
+          alert("No se encontró el producto");
+        }
+        };*/
 
     function actualizarListas() {
         let listas = JSON.parse(localStorage.getItem('listas') || '[]');
@@ -61,11 +76,11 @@ window.addEventListener('storage', function(event) {
     }
 });
 
-window.onload = function() {
+window.addEventListener('load', function(){
     try {
         inicializarLocalStorageListas();
-            actualizarListas();  // Mostrar autos existentes en LocalStorage
+        actualizarListas();
     } catch (error) {
-        console.error('Error al cargar o actualizar los autos:', error);
+        console.error('Se ha producido un error:', error);
     }
-};
+})

@@ -1,13 +1,13 @@
 export class Lista{
-    constructor(id, tituloInput, subtituloInput, contenido = null,){
+    constructor(tituloInput, subtituloInput, id, contenido = null,){
         this.info = { titulo: tituloInput, 
                        subtitulo:  subtituloInput };
+        this.id = id;
         if (contenido != null){
             this.contenido = contenido;
         } else {
             this.contenido = "No hay juegos todavia.";
         };
-        this.id = id;
     }
 }
 

@@ -10,9 +10,8 @@
 
 <body>
     <main>
-        <div id="parcel-list" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-              <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-              <span class="fs-5 fw-semibold">Organizer</span>
+        <nav>
+            <span class="fs-5 fw-semibold">Organizer</span>
             <div class="parcels">
                 <button id="checklist">Crear Lista</button><br></br>
                 <button id="sort">Ordenar</button>
@@ -22,13 +21,10 @@
                 <input type="text" id="subtextInput" placeholder="Ingresar subtitulo..." required>
                 <button class="acceptBtn" id="createBtn">Crear</button>
             </div>
-            <a href="#" type="button" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between">
-                  <strong class="mb-1">¡Bienvenido!</strong>
-                </div>
-                <div class="col-10 mb-1 small">Pequeña explicación del contenido de la nota.</div>
-                <button class="delete-btn">x</button>
-              </a>
+        </nav>
+
+        <div id="parcel-list" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
+              <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
         </div>
         <section>
             <div class="popup" id="deletePopup" style="display: none;">
