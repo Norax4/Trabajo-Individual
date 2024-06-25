@@ -6,7 +6,7 @@ export class Lista{
         if (contenido != null){
             this.contenido = contenido;
         } else {
-            this.contenido = "No hay juegos todavia.";
+            this.contenido = "No hay tareas todavia.";
         };
     }
 }

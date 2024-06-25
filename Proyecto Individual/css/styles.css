@@ -67,6 +67,10 @@ body {
     overflow-y: auto;
   }
 
+  .popup{
+    position: relative;
+  }
+
   .delete-btn{
     float: right;
     border: none;
@@ -74,5 +78,5 @@ body {
   }
 
   .delete-btn :hover{
-    background-color: lightgrey;
+    background-color: grey;
   }

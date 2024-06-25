@@ -4,6 +4,7 @@ import { Lista } from './clases.js';
 let botonChecklist = document.getElementById("checklist");
 let popup = document.getElementById("popup");
 let createBtn = document.getElementById("createBtn");
+let cancelBtn = document.getElementById('cancelBtn');
 
     function cargarListas(array){
         const parcelList = document.getElementById("parcel-list");
@@ -21,7 +22,7 @@ let createBtn = document.getElementById("createBtn");
                         <strong class="mb-1">${item.info.titulo}</strong>
                     </div>
                     <div class="col-10 mb-1 small">${item.info.subtitulo}</div>
-                    <button class="btn danger-btn" class="eliminarLista(${item.id}">x</button>
+                    <button class="btn danger-btn" onclick="eliminarLista(${item.id})">x</button>
                 </a>`;
     }
 
@@ -30,18 +31,23 @@ let createBtn = document.getElementById("createBtn");
         popup.style.display = 'block';
     });
 
+    cancelBtn.addEventListener('click', function(){
+        popup.style.display = 'none';
+    })
+
     //Crear tarea
     createBtn.addEventListener('click', function() {
         const title = document.getElementById("textInput").value;
         const subtitle = document.getElementById("subtextInput").value;
         const nuevaLista = new Lista(title, subtitle);
-        let listas = JSON.parse(localStorage.getItem('listas' || '[]'));
-        listas.push(nuevaLista);
-        localStorage.setItem('listas', JSON.stringify(listas));
+        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
+        listass.push(nuevaLista);
+        localStorage.setItem('listas', JSON.stringify(listass));
         popup.style.display = 'none';
         textInput.value = '';
         actualizarListas();
     });
+
 
     /*function eliminarLista(id) {
         let gameStorage = obtenerLocalStorage();
