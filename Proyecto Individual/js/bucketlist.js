@@ -61,8 +61,7 @@ let cancelBtn = document.getElementById('cancelBtn');
     function eliminarLista() {
         let deleteBtns = document.querySelectorAll('eliminarBtn');
         let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
-        if (deleteBtns !== null) {
-            for (let boton of deleteBtns) {
+        deleteBtns.forEach((boton) => {
               boton.addEventListener("click", (e) => {
                 let index = listass.findIndex((lista) => lista.id === (e.target.id));
                 listass.splice(index, 1);
@@ -70,8 +69,7 @@ let cancelBtn = document.getElementById('cancelBtn');
                 actualizarListas();
                 alert("Producto eliminado correctamente");
                 });
-            }
-        }
+            });
     };
 
     function actualizarListas() {
