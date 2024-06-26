@@ -19,6 +19,10 @@ body {
   nav {
     background-color: rgb(177, 247, 238);
   }
+
+  ul {
+    float: right;
+  }
   
   .dropdown-toggle { outline: 0; }
   

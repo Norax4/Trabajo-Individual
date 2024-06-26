@@ -12,8 +12,9 @@ export class Lista{
 }
 
 export class Elemento{
-    constructor(texto, lista){
+    constructor(texto, lista, id){
         this.texto = texto;
         this.lista = lista;
+        this.id = id;
     }
 }
