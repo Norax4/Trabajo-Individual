@@ -1,5 +1,5 @@
 import { listas } from './array.js';
-import { Lista, Elemento } from './clases.js';
+import { Lista, Tarea } from './clases.js';
 
 let botonChecklist = document.getElementById("checklist");
 let popup = document.getElementById("popup");

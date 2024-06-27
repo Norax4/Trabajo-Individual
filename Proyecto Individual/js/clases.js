@@ -4,17 +4,41 @@ export class Lista{
                        subtitulo:  subtituloInput };
         this.id = id;
         if (contenido != null){
-            this.contenido = contenido;
+            for (const tareaParametro of contenido){
+                this.agregarTarea(tareaParametro.texto);
+            }
         } else {
-            this.contenido = "No hay tareas todavia.";
+            this.contenido = [];
         };
     }
-}
 
-export class Elemento{
-    constructor(texto, lista, id){
+    nuevoIdTarea(){
+        let ids = this.contenido.map((tarea) => tarea.id);
+        return Math.max(...ids) + 1;
+    }
+
+    agregarTarea(texto){
+        let nuevaTarea = new Tarea(texto, this.nuevoIdTarea());
+        this.contenido.push(nuevaTarea);
+    }
+
+    eliminarTarea(id){
+        let indice = this.contenido.findIndex((tarea) => tarea.id === id);
+        this.contenido.splice(indice, 1);
+    }
+
+    buscarTarea(id){
+        return this.contenido.find((tarea) => tarea.id === id);
+    }
+
+    listarTareas(){
+        return this.contenido;
+    }
+};
+
+export class Tarea{
+    constructor(texto, id){
         this.texto = texto;
-        this.lista = lista;
         this.id = id;
     }
-}
+};
