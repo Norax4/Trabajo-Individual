@@ -5,17 +5,29 @@ let botonChecklist = document.getElementById("checklist");
 let popup = document.getElementById("popup");
 let createBtn = document.getElementById("createBtn");
 let cancelBtn = document.getElementById('cancelBtn');
+let sortListas = document.getElementById('sort');
 
 
     function cargarListas(array){
         const parcelList = document.getElementById("parcel-list");
         parcelList.innerHTML = '';
-        for (const item of array){
+        array.forEach((item, index) => {
             const div = document.createElement('div');
             div.innerHTML += listaHTML(item);
+            const modifyButton = document.createElement('button');
+            modifyButton.textContent = 'Modificar';
+            modifyButton.className = 'modify-button';
+            modifyButton.onclick = () => modificarLista(index);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'X';
+            deleteButton.className = 'delete-button'; 
+            deleteButton.onclick = () => eliminarLista(index);
+
+            div.appendChild(deleteButton);
+            div.appendChild(modifyButton);
             parcelList.appendChild(div);
-        }
-        eliminarLista();
+        });
     }
 
     function listaHTML(item){
@@ -24,7 +36,6 @@ let cancelBtn = document.getElementById('cancelBtn');
                         <strong class="mb-1">${item.info.titulo}</strong>
                     </div>
                     <div class="col-10 mb-1 small">${item.info.subtitulo}</div>
-                    <button class="eliminarBtn">x</button>
                 </a>`;
     }
 
@@ -47,7 +58,6 @@ let cancelBtn = document.getElementById('cancelBtn');
         listass.push(nuevaLista);
         localStorage.setItem('listas', JSON.stringify(listass));
         popup.style.display = 'none';
-        textInput.value = '';
         actualizarListas();
     });
 
@@ -58,19 +68,19 @@ let cancelBtn = document.getElementById('cancelBtn');
         return Math.max(...ids) + 1;
     };
 
-    function eliminarLista() {
-        let deleteBtns = document.querySelectorAll('eliminarBtn');
-        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
-        deleteBtns.forEach((boton) => {
-              boton.addEventListener("click", (e) => {
-                let index = listass.findIndex((lista) => lista.id === (e.target.id));
-                listass.splice(index, 1);
-                localStorage.setItem('listas', JSON.stringify(listass));
-                actualizarListas();
-                alert("Producto eliminado correctamente");
-                });
-            });
-    };
+    function modificarLista(index){
+        popup.style.display = 'block';
+        let listass = JSON.parse(localStorage.getItem('listas'));
+        let lista = listass[index];
+        localStorage.setItem('editLista', JSON.stringify({index, lista})); 
+    }
+
+    function eliminarLista(index) {
+        let listass = JSON.parse(localStorage.getItem('listas'));
+        listass.splice(index, 1);
+        localStorage.setItem('listas', JSON.stringify(listass));
+        actualizarListas();
+    }
 
     function actualizarListas() {
         let listas = JSON.parse(localStorage.getItem('listas') || '[]');
