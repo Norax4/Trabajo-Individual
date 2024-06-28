@@ -17,28 +17,34 @@
                 <button id="checklist">Crear Lista</button><br></br>
                 <button id="sort">Ordenar</button>
             </div>
-            <div class="popup" id="popup" style="display:none;">
-                <input type="text" id="textInput" placeholder="Ingresar titulo..." required>
-                <input type="text" id="subtextInput" placeholder="Ingresar subtitulo..." required>
-                <button class="acceptBtn" id="createBtn">Crear</button>
+            <form id="listas-form" style="display:none;">
+                <input type="text" id="textInput" class="form-control" placeholder="Ingresar titulo..." required><br>
+                <input type="text" id="subtextInput" class="form-control" placeholder="Ingresar subtitulo..." required><br>
+                <button class="acceptBtn" id="submit">Crear</button>
                 <button class="acceptBtn" id="cancelBtn">Cancelar</button>
-            </div>
+            </form>
             <div class="popup" id="deletePopup" style="display: none;">
-                <p>¿Seguro de eliminar esta tarea?</p>
+                <p>¿Seguro de eliminar esta lista?</p>
                 <button class="acceptBtn" id="deleteBtn">Eliminar</button>
                 <button class="acceptBtn" id="cancelBtn2">Cancelar</button>
             </div>
         </nav>
-
-        <section>
-            <div id="parcel-list" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-                <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+       
+            <div class="row">
+                <div id="parcel-list" class="col-4 bg-body-tertiary" style="width: 380px;">
+                    <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                </div>
+                <div id="tareas-div" class="col-4">
+                    <form id="popup-listas" style="display: none;">
+                        <input id="tarea-texto" class="form-control" type="text" placeholder="Ingresar tarea..." required>
+                        <button id="submit" class="acceptBtn">Aceptar</button>
+                    </form>
+                    <ul id="tareas-list">
+                        <!-- Tareas de cada lista -->
+                    </ul>
+                </div>
             </div>
-        </section>
 
-            <ul>
-                <p> Tarea</p>
-            </ul>
             
     </main>
     

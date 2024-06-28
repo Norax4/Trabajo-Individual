@@ -2,7 +2,7 @@ import { listas } from './array.js';
 import { Lista, Tarea } from './clases.js';
 
 let botonChecklist = document.getElementById("checklist");
-let popup = document.getElementById("popup");
+let form = document.getElementById("listas-form");
 let createBtn = document.getElementById("createBtn");
 let cancelBtn = document.getElementById('cancelBtn');
 let sortListas = document.getElementById('sort');
@@ -14,6 +14,7 @@ let sortListas = document.getElementById('sort');
         array.forEach((item, index) => {
             const div = document.createElement('div');
             div.innerHTML += listaHTML(item);
+
             const modifyButton = document.createElement('button');
             modifyButton.textContent = 'Modificar';
             modifyButton.className = 'modify-button';
@@ -21,60 +22,89 @@ let sortListas = document.getElementById('sort');
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'X';
-            deleteButton.className = 'delete-button'; 
+            deleteButton.className = 'delete-button';
             deleteButton.onclick = () => eliminarLista(index);
 
+            const addButton = document.createElement('button');
+            addButton.textContent = '+';
+            addButton.className = 'add-button';
+            addButton.onclick = () => agregarTareas(index);
+
+            div.appendChild(addButton);
             div.appendChild(deleteButton);
             div.appendChild(modifyButton);
             parcelList.appendChild(div);
         });
+        listarTareas();
     }
 
     function listaHTML(item){
-        return `<a href="#" id="${item.id}" type="button" class="list-group-item list-group-item-action py-3 lh-sm">
+        return `<button id="${item.id}" class="btn-list list-group-item list-group-item-action py-3 lh-sm">
                     <div class="d-flex w-100 align-items-center justify-content-between">
                         <strong class="mb-1">${item.info.titulo}</strong>
                     </div>
                     <div class="col-10 mb-1 small">${item.info.subtitulo}</div>
-                </a>`;
+                </button>`;
     }
 
     //Popup para crear lista
     botonChecklist.addEventListener('click', function() {
-        popup.style.display = 'block';
+        form.style.display = 'block';
     });
 
     cancelBtn.addEventListener('click', function(){
-        popup.style.display = 'none';
+        form.style.display = 'none';
     })
 
     //Crear lista
-    createBtn.addEventListener('click', function() {
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
+
+        //Obtener informacion de los input
         const title = document.getElementById("textInput").value;
         const subtitle = document.getElementById("subtextInput").value;
-        const id = nuevoId();
+        const id = parseInt(this.dataset.idLista);
+
         const nuevaLista = new Lista(title, subtitle, id);
-        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
-        listass.push(nuevaLista);
+        
+        if (this.dataset.idLista !== undefined){
+            let indice = listass.findIndex((list) => list.id === nuevaLista.id);
+            listass[indice] = nuevaLista;
+        } else {
+            nuevaLista.id = nuevoId();
+            listass.push(nuevaLista);
+        };
         localStorage.setItem('listas', JSON.stringify(listass));
-        popup.style.display = 'none';
+        form.style.display = 'none';
         actualizarListas();
+        //reset formulario
+        this.reset();
+        //eliminar id del formulario
+        delete this.dataset.idLista;
     });
 
     //Id para la lista
     function nuevoId(){
-        let listas = JSON.parse(localStorage.getItem('listas' || '[]'));
-        let ids = listas.map((lista) => lista.id);
+        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
+        let ids = listass.map((lista) => lista.id);
         return Math.max(...ids) + 1;
     };
 
+    //Modificacion de listas
     function modificarLista(index){
-        popup.style.display = 'block';
+        form.style.display = 'block';
         let listass = JSON.parse(localStorage.getItem('listas'));
         let lista = listass[index];
-        localStorage.setItem('editLista', JSON.stringify({index, lista})); 
+
+        if (lista){
+            document.getElementById("textInput").value = lista.info.titulo;
+            document.getElementById("subtextInput").value = lista.info.subtitulo
+            form.dataset.idLista = lista.id;
+        }
     }
 
+    //Eliminar listas
     function eliminarLista(index) {
         let listass = JSON.parse(localStorage.getItem('listas'));
         listass.splice(index, 1);
@@ -82,6 +112,53 @@ let sortListas = document.getElementById('sort');
         actualizarListas();
     }
 
+    //Agregar tareas a una lista
+    let formTarea = document.getElementById('popup-listas');
+
+    function agregarTareas(index){
+        formTarea.style.display = 'block';
+        let listass = JSON.parse(localStorage.getItem('listas'));
+        let lista = listass[index];
+
+        if (lista){
+            formTarea.dataset.idLista = lista.id;
+        }
+    };
+
+    formTarea.addEventListener('submit', function(event){
+        event.preventDefault();
+        let listass = JSON.parse(localStorage.getItem('listas' || '[]'));
+        let lista = listass.find((list) => list.id === (this.dataset.idLista));
+
+        //Obtener información del form
+        let textoTarea = document.getElementById('tarea-texto').value.trim();
+        lista.agregarTarea(textoTarea)
+        listass.push(lista);
+
+        localStorage.setItem('listas', JSON.stringify(listass));
+        formTarea.style.display = 'none';
+        actualizarListas();
+        this.reset();
+        delete this.dataset.idLista;
+    });
+
+    //Listar el contenido de cada lista
+    function listarTareas(){
+        let botones = document.querySelectorAll('.btn-list');
+        let listass = JSON.parse(localStorage.getItem('listas'));
+        if (botones !== null){
+            for (const boton of botones){
+                boton.addEventListener('click', function(e){
+                    let lista = listass.find((list) => list.id === parseInt(e.target.id));
+                    let contenidoDeLista = lista.listarTareas();
+                    console.log(contenidoDeLista);
+                })
+            }
+        }
+        
+    }
+
+    //Actualizar las listas si hay cambios
     function actualizarListas() {
         let listas = JSON.parse(localStorage.getItem('listas') || '[]');
         cargarListas(listas);

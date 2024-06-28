@@ -1,5 +1,5 @@
 export class Lista{
-    constructor(tituloInput, subtituloInput, id, contenido = null,){
+    constructor(tituloInput, subtituloInput, id, contenido){
         this.info = { titulo: tituloInput, 
                        subtitulo:  subtituloInput };
         this.id = id;
@@ -18,8 +18,10 @@ export class Lista{
     }
 
     agregarTarea(texto){
-        let nuevaTarea = new Tarea(texto, this.nuevoIdTarea());
-        this.contenido.push(nuevaTarea);
+        if (texto !== undefined){
+            let nuevaTarea = new Tarea(texto, this.nuevoIdTarea());
+            this.contenido.push(nuevaTarea);
+        };
     }
 
     eliminarTarea(id){

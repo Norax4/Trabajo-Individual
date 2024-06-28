@@ -1,6 +1,7 @@
 body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    overflow: hidden;
   }
   
   html {
@@ -9,19 +10,15 @@ body {
   
   main {
     height: 100vh;
-    height: -webkit-fill-available;
+    height: -webkit-fill;
     max-height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     background-color: aquamarine;
   }
 
   nav {
     background-color: rgb(177, 247, 238);
-  }
-
-  ul {
-    float: right;
   }
   
   .dropdown-toggle { outline: 0; }
@@ -75,7 +72,7 @@ body {
     position: relative;
   }
 
-  .delete-btn{
+  .delete-button{
     float: right;
     border: none;
     background-color: white;
@@ -84,3 +81,5 @@ body {
   .delete-btn :hover{
     background-color: grey;
   }
+
+  

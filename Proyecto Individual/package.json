@@ -5,11 +5,11 @@
   "name": "proyecto-individual",
   "version": "1.0.0",
   "main": "index.js",
+  "type":"module",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type":"module",
   "keywords": [],
   "author": "",
   "license": "ISC"
